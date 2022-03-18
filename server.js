@@ -1,22 +1,53 @@
+// creating port to have in localhost 
 
-const PORT = 3001;
-const express = require('express');
-const app = express();
-const fs = require('fs');
-const path = require('path');
-const apiRoutes = require('./routes/apiRoutes');
-const htmlRoutes = require('./routes/htmlRoutes');
+const PORT = 3000;
+const express = require('express'); //require express pkg
+const app = express();  //having express method into a variable
+const fs = require('fs'); //requiring a fs pkg
+const path = require('path'); //requiring path 
 
+
+// const apiRoutes = require('./routes/apiRoutes');
+// const htmlRoutes = require('./routes/htmlRoutes');
+
+
+
+//==============================================================================
+// Gotta link to my assets!
+app.use(express.static('public'))
+
+//==============================================================================
+// This sets up data parsing-- Express will interpret it/format data as JSON.
+// This is required for API calls!
+//==============================================================================
 // Express url in code makes it understand what is being requested 
 app.use(express.urlencoded({
     extended: true
 }))
-
-
-app.use(express.static('public'))
 app.use(express.json());
-app.use(`/api`,apiRoutes);
-app.use(`/html`,htmlRoutes);
 
-const allNotes = require('./Los_Notes/Develop/db/db.json');
+//==============================================================================
+// 
+// having the index html start with the start btn and the it should listen to when it is being clicked on 
+//==============================================================================
+app.get(`/`, function(re, res){
+    res.sendFile(path.join(__dirname, "/public/index.html"))
+
+});
+
+
+
+app.use("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+});
+
+app.use('/api/notes', (req, res) => {
+    
+    res.json([{"title":"Test Title","text":"Test text"}])
+});``
+
+
+
+
+// const allNotes = require('./Los_Notes/Develop/db/db.json');
 app.listen(PORT, e => console.log("Running"))
