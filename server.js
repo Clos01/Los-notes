@@ -6,7 +6,6 @@ const app = express();  //having express method into a variable
 const fs = require('fs'); //requiring a fs pkg
 const path = require('path'); //requiring path 
 
-
 // const apiRoutes = require('./routes/apiRoutes');
 // const htmlRoutes = require('./routes/htmlRoutes');
 
@@ -30,7 +29,7 @@ app.use(express.json());
 // 
 // having the index html start with the start btn and the it should listen to when it is being clicked on 
 //==============================================================================
-app.get(`/`, function(re, res){
+app.get(`/`, function(req, res){
     res.sendFile(path.join(__dirname, "/public/index.html"))
 
 });
@@ -41,13 +40,20 @@ app.use("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
 
-app.use('/api/notes', (req, res) => {
-    
-    res.json([{"title":"Test Title","text":"Test text"}])
-});``
+app.get("/api/notes", function(req, res) {
+    res.sendFile(path.join(__dirname, "/Develop/db/db.json"));
+});
 
 
 
 
-// const allNotes = require('./Los_Notes/Develop/db/db.json');
+
+
+
+
+
+
+
+
+// const allNotes = require('./Los_Notes/Develop/Develop/db/db.json');
 app.listen(PORT, e => console.log("Running"))
