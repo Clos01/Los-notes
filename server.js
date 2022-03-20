@@ -44,21 +44,28 @@ app.get("/api/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "/Develop/db/db.json"));
 });
 
-
+//saving notes to be config with id  (one note id =1 note 2 =id 2 )
 app.get("/api/notes:id", function (req,res){
     let SavedNotes= JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf-8"));
     res.json(SavedNotes[Number(req.params.id)]);
 });
 
+//gathers 
+app.get("*", function(req,res){
+    res.sendFile(path.join(mainDir, "index.html"))
+});
 
+app.post("/api/notes", function(req, res) {
+    let savedNotes = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf8"));
+    let newNote = req.body;
+    let uniqueID = (savedNotes.length).toString();
+    newNote.id = uniqueID;
+    savedNotes.push(newNote);
 
-
-
-
-
-
-
-
+    fs.writeFileSync("./Develop/db/db.json", JSON.stringify(savedNotes));
+    console.log("Note saved to db.json. Content: ", newNote);
+    res.json(savedNotes);
+})
 
 // const allNotes = require('./Los_Notes/Develop/Develop/db/db.json');
 app.listen(PORT, e => console.log("Running"))
