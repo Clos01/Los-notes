@@ -39,11 +39,16 @@ app.get(`/`, function(req, res){
 app.use("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
-
+// app.get is routing to app/notes  sends the file to join from notes 
 app.get("/api/notes", function(req, res) {
     res.sendFile(path.join(__dirname, "/Develop/db/db.json"));
 });
 
+
+app.get("/api/notes:id", function (req,res){
+    let SavedNotes= JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf-8"));
+    res.json(SavedNotes[Number(req.params.id)]);
+});
 
 
 
