@@ -1,6 +1,6 @@
 // creating port to have in localhost 
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const express = require('express'); //require express pkg
 const app = express();  //having express method into a variable
 const fs = require('fs'); //requiring a fs pkg
