@@ -54,7 +54,7 @@ app.get("/api/notes:id", function (req,res){
 app.get("*", function(req,res){
     res.sendFile(path.join(mainDir, "index.html"))
 });
-
+// saves the notes with json and fs 
 app.post("/api/notes", function(req, res) {
     let savedNotes = JSON.parse(fs.readFileSync("./Develop/db/db.json", "utf8"));
     let newNote = req.body;
